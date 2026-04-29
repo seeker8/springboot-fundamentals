@@ -1,6 +1,7 @@
 package com.reilly.shopping.controllers;
 
 import com.reilly.shopping.entities.Product;
+import com.reilly.shopping.exceptions.ProductMinimumPriceException;
 import com.reilly.shopping.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,12 @@ public class ProductRestController {
   @GetMapping("/{id}")
   public ResponseEntity<Product> findProductById(@PathVariable Long id) {
     return ResponseEntity.of(productService.findProductById(id));
+  }
+
+  @GetMapping(params = "min")
+  public List<Product> getProductsByMinPrice(@RequestParam(defaultValue = "0.0") double min) {
+    if(min < 0 ) throw new ProductMinimumPriceException(min);
+    return productService.findAllProductsByMinPrice(min);
   }
 
   @PostMapping

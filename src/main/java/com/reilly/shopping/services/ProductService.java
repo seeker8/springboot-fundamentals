@@ -37,6 +37,10 @@ public class ProductService {
     return productRepository.findById(id);
   }
 
+  public List<Product> findAllProductsByMinPrice(double min) {
+    return productRepository.findAllByPriceGreaterThanEqual(BigDecimal.valueOf(min));
+  }
+
   public Product saveProduct(Product product) {
     return productRepository.save(product);
   }

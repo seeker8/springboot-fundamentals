@@ -54,6 +54,24 @@ class ProductRestControllerTest {
       .consumeWith(System.out::println);
   }
 
+  @Test
+  void productsWithMinPrice() {
+    client.get()
+      .uri("/products?min=10.00")
+      .exchange()
+      .expectStatus().isOk()
+      .expectBodyList(Product.class).hasSize(2)
+      .consumeWith(System.out::println);
+  }
+
+  @Test
+  void productsWithInvalidMinPrice() {
+    client.get()
+      .uri("/products?min=-3.99")
+      .exchange()
+      .expectStatus().isBadRequest();
+  }
+
   @ParameterizedTest(name = "Product ID: {0}")
   @MethodSource("getIds")
   void getProductsThatExist(Long id) {
