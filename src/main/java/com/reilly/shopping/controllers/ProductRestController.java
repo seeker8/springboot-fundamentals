@@ -31,7 +31,7 @@ public class ProductRestController {
 
   @PostMapping
   public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
-    Product p = productService.save(product);
+    Product p = productService.saveProduct(product);
     URI location = ServletUriComponentsBuilder.fromCurrentRequest()
       .path("/{id}")
       .buildAndExpand(p.getId())
