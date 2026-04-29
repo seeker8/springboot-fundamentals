@@ -49,4 +49,15 @@ public class ProductRestController {
       })
       .orElse(ResponseEntity.notFound().build());
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+    return productService.findProductById(id)
+      .map(p -> {
+        productService.deleteProduct(p);
+        return ResponseEntity.noContent().build();
+      })
+      .orElse(ResponseEntity.notFound().build());
+
+  }
 }

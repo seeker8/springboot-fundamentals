@@ -37,7 +37,11 @@ public class ProductService {
     return productRepository.findById(id);
   }
 
-  public Product saveProduct(Product product){
+  public Product saveProduct(Product product) {
     return productRepository.save(product);
+  }
+
+  public void deleteProduct(Product product) {
+    productRepository.delete(product);
   }
 }

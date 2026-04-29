@@ -99,7 +99,7 @@ class ProductRestControllerTest {
     product.setPrice(product.getPrice().add(BigDecimal.ONE));
 
     client.put()
-      .uri("/products", product.getId())
+      .uri("/products/{id}", product.getId())
       .body(Mono.just(product), Product.class)
       .exchange()
       .expectStatus().isOk()
@@ -108,17 +108,17 @@ class ProductRestControllerTest {
   }
 
   @Test
-  void deleteAllProducts() {
+  void deleteProduct() {
     List<Long> products = getIds();
 
     client.delete()
-      .uri("/products")
+      .uri("/products/{id}", products.get(0))
       .exchange()
       .expectStatus().isNoContent();
 
     client.get()
-      .uri("/products")
+      .uri("/products/{id}", products.get(0))
       .exchange()
-      .expectBodyList(Product.class).hasSize(0);
+      .expectStatus().isNotFound();
   }
 }
