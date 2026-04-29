@@ -45,7 +45,7 @@ public class ProductRestController {
       .map(p -> {
         p.setName(product.getName());
         p.setPrice(product.getPrice());
-        return ResponseEntity.ok(productService.saveProduct(product));
+        return ResponseEntity.ok(productService.saveProduct(p));
       })
       .orElse(ResponseEntity.notFound().build());
   }
